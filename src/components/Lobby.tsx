@@ -14,9 +14,14 @@ const Lobby = () => {
   const [roomUsers, setRoomUsers] = useState<roomUsersType[]>([]);
 
   useEffect(() => {
-    socket.on("lobbyJoined", (roomId: string, roomUsers: roomUsersType[]) => {
-      console.log("Joind Lobby" + roomId);
-      setRoomUsers(roomUsers);
+    console.log("Component mounted");
+    socket.onAny((event, ...args) => {
+        console.log(event, args);
+    });
+    socket.emit("getRoomInfo", roomId);
+    socket.on("roomInfo", (users: roomUsersType[]) => {
+        console.log("roomInfo received");
+        setRoomUsers(users);
     });
   }, [roomId]);
   return (

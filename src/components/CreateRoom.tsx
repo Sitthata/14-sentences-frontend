@@ -5,19 +5,21 @@ import io from "socket.io-client";
 const socket = io("http://localhost:8080");
 
 const CreateRoom = () => {
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
     // Look for lobbyCreated Event
-    socket.on("lobbyCreated", (roomId: string) => {
+    socket.on("lobbyCreated", (roomId: string, hostUser) => {
+      console.log("Lobby Created: ", roomId);
+      console.log("Initial Users: ", hostUser);
       navigate(`/lobby/${roomId}`);
     });
   }, [navigate, username]);
 
   const handleCreateRoom = (e: React.FormEvent) => {
     e.preventDefault();
-    if(!username) return alert("Please input your username");
+    if (!username) return alert("Please input your username");
     socket.emit("createLobby", username);
   };
 
@@ -25,12 +27,14 @@ const CreateRoom = () => {
     <form className="flex flex-col" onSubmit={handleCreateRoom}>
       <label htmlFor="username">Input your username</label>
       <input
-      className="border-2 border-gray-500"
+        className="border-2 border-gray-500"
         type="text"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
-      <button className="m-5 border" type="submit">Create Room</button>
+      <button className="m-5 border" type="submit">
+        Create Room
+      </button>
     </form>
   );
 };
