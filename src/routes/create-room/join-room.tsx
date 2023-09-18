@@ -1,4 +1,4 @@
-import JoinRoom from '../../components/JoinRoom'
+import JoinRoom from '../../components/JoinRoom';
 
 const JoinExistRoomPage = () => {
   return (
@@ -6,7 +6,7 @@ const JoinExistRoomPage = () => {
       <h1 className="text-3xl">14 sentence of death</h1>
       <JoinRoom />
     </div>
-  )
-}
+  );
+};
 
-export default JoinExistRoomPage
+export default JoinExistRoomPage;

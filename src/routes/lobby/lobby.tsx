@@ -1,9 +1,7 @@
-import Lobby from "../../components/Lobby"
+import Lobby from '../../components/Lobby';
 
 const LobbyPage = () => {
-  return (
-    <Lobby />
-  )
-}
+  return <Lobby />;
+};
 
-export default LobbyPage
+export default LobbyPage;

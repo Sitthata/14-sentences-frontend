@@ -1,8 +1,8 @@
-import { useParams } from "react-router-dom";
-import { io } from "socket.io-client";
-import { useEffect, useState } from "react";
+import { useParams } from 'react-router-dom';
+import { io } from 'socket.io-client';
+import { useEffect, useState } from 'react';
 
-const socket = io("http://localhost:8080");
+const socket = io('http://localhost:8080');
 
 type roomUsersType = {
   id: string;
@@ -14,14 +14,14 @@ const Lobby = () => {
   const [roomUsers, setRoomUsers] = useState<roomUsersType[]>([]);
 
   useEffect(() => {
-    console.log("Component mounted");
+    console.log('Component mounted');
     socket.onAny((event, ...args) => {
-        console.log(event, args);
+      console.log(event, args);
     });
-    socket.emit("getRoomInfo", roomId);
-    socket.on("roomInfo", (users: roomUsersType[]) => {
-        console.log("roomInfo received");
-        setRoomUsers(users);
+    socket.emit('getRoomInfo', roomId);
+    socket.on('roomInfo', (users: roomUsersType[]) => {
+      console.log('roomInfo received');
+      setRoomUsers(users);
     });
   }, [roomId]);
   return (

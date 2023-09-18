@@ -1,29 +1,29 @@
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import io from 'socket.io-client'
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import io from 'socket.io-client';
 
-const socket = io('http://localhost:8080')
+const socket = io('http://localhost:8080');
 
 const JoinRoom = () => {
-  const [username, setUsername] = useState('')
-  const [roomId, setRoomId] = useState('')
-  const navigate = useNavigate()
+  const [username, setUsername] = useState('');
+  const [roomId, setRoomId] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     //Find room
     socket.on('lobbyJoined', (roomId: string, username) => {
-      console.log('Joined lobby: ', roomId)
-      console.log('Initial Users: ', username)
-      navigate(`/lobby/${roomId}`)
-    })
-  }, [navigate, username, roomId])
+      console.log('Joined lobby: ', roomId);
+      console.log('Initial Users: ', username);
+      navigate(`/lobby/${roomId}`);
+    });
+  }, [navigate, username, roomId]);
 
   const handleJoinRoom = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!roomId) return alert('Please input your room ID')
-    if (!username) return alert('Please input your username')
-    socket.emit('joinLobby', roomId, username)
-  }
+    e.preventDefault();
+    if (!roomId) return alert('Please input your room ID');
+    if (!username) return alert('Please input your username');
+    socket.emit('joinLobby', roomId, username);
+  };
 
   return (
     <form className="flex flex-col" onSubmit={handleJoinRoom}>
@@ -45,7 +45,7 @@ const JoinRoom = () => {
         Join Room
       </button>
     </form>
-  )
-}
+  );
+};
 
-export default JoinRoom
+export default JoinRoom;
