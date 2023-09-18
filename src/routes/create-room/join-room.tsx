@@ -1,6 +1,6 @@
 import JoinRoom from '../../components/JoinRoom'
 
-const JoinExistRoom = () => {
+const JoinExistRoomPage = () => {
   return (
     <div className="flex-col h-screen gap-5 flex-center">
       <h1 className="text-3xl">14 sentence of death</h1>
@@ -9,4 +9,4 @@ const JoinExistRoom = () => {
   )
 }
 
-export default JoinExistRoom
+export default JoinExistRoomPage

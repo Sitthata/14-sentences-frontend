@@ -12,11 +12,11 @@ const JoinRoom = () => {
   useEffect(() => {
     //Find room
     socket.on('lobbyJoined', (roomId: string, username) => {
-      console.log('lobby joined: ', roomId)
+      console.log('Joined lobby: ', roomId)
       console.log('Initial Users: ', username)
       navigate(`/lobby/${roomId}`)
     })
-  }, [navigate, username])
+  }, [navigate, username, roomId])
 
   const handleJoinRoom = (e: React.FormEvent) => {
     e.preventDefault()

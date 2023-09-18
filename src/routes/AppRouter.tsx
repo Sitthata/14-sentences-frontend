@@ -1,5 +1,5 @@
 import CreateRoomPage from "./create-room/create-room";
-import JoinExistRoom from "./create-room/join-room";
+import JoinExistRoomPage from "./create-room/join-room";
 import LobbyPage from "./lobby/lobby";
 
 const routes = [
@@ -13,7 +13,7 @@ const routes = [
     },
     {
         path: "/join-room",
-        element: <JoinExistRoom />
+        element: <JoinExistRoomPage />
     }
 ];
 
