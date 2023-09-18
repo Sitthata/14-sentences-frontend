@@ -4,7 +4,7 @@ import LobbyPage from "./lobby/lobby";
 const routes = [
     {
         path: "/",
-        element: <CreateRoomPage />,
+        element: <CreateRoomPage/>,
     },
     {
         path: "/lobby/:roomId",
