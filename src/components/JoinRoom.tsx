@@ -1,50 +1,88 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import io from 'socket.io-client';
+import { Button, Flex, Modal, TextInput } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import socket from "../socket/socket"
 
-const socket = io('http://localhost:8080');
+type ErrorType = {
+  username?: string;
+  roomId?: string;
+}
 
 const JoinRoom = () => {
-  const [username, setUsername] = useState('');
-  const [roomId, setRoomId] = useState('');
+  const [username, setUsername] = useState<string>("");
+  const [roomId, setRoomId] = useState("");
+  const [opened, { open, close }] = useDisclosure(false);
+  const [error, setError] = useState<ErrorType>({});
   const navigate = useNavigate();
 
   useEffect(() => {
     //Find room
-    socket.on('lobbyJoined', (roomId: string, username) => {
-      console.log('Joined lobby: ', roomId);
-      console.log('Initial Users: ', username);
+    socket.on("lobbyJoined", (roomId: string, username) => {
+      console.log("Joined lobby: ", roomId);
+      console.log("Initial Users: ", username);
       navigate(`/lobby/${roomId}`);
     });
   }, [navigate, username, roomId]);
 
   const handleJoinRoom = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!roomId) return alert('Please input your room ID');
-    if (!username) return alert('Please input your username');
-    socket.emit('joinLobby', roomId, username);
+    if (validateForm()) {
+      socket.emit("joinLobby", roomId, username);
+    } 
   };
 
+  const openModal = () => {
+    open();
+    setError({});
+  }
+
+  const validateForm = () => {
+    const errors: ErrorType = {}
+    if (!username.trim()) errors.username = "Please enter a username";
+    if (!roomId.trim()) errors.roomId = "Please enter a room ID";
+    
+    setError(errors)
+    return Object.keys(errors).length === 0;
+  }
+
   return (
-    <form className="flex flex-col" onSubmit={handleJoinRoom}>
-      <label htmlFor="roomId">Input your Room-ID</label>
-      <input
-        className="border-2 border-gray-500"
-        type="text"
-        value={roomId}
-        onChange={(e) => setRoomId(e.target.value)}
-      />
-      <label htmlFor="username">Input your username</label>
-      <input
-        className="border-2 border-gray-500"
-        type="text"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <button className="m-5 border" type="submit">
+    <>
+      <Modal
+        opened={opened}
+        onClose={close}
+        title="Join Room"
+        centered
+        style={{ padding: "1rem" }}
+      >
+        {/* Modal content */}
+        
+        <Flex gap="md" direction="column">
+        <TextInput
+            placeholder="Room ID"
+            size="md"
+            value={roomId}
+            onChange={(e) => setRoomId(e.target.value)}
+            label="Enter Room ID"
+            error={error.roomId}
+          />
+          <TextInput
+            placeholder="Username"
+            size="md"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            label="Enter Username"
+            error={error.username}
+          />
+          <Button variant="filled" type="submit" onClick={handleJoinRoom}>
+            Join Room
+          </Button>
+        </Flex>
+      </Modal>
+      <Button variant="outline" onClick={openModal}>
         Join Room
-      </button>
-    </form>
+      </Button>
+    </>
   );
 };
 

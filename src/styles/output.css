@@ -584,6 +584,22 @@ video {
   outline-width: 1px;
 }
 
+.outline-2 {
+  outline-width: 2px;
+}
+
+.outline-gray-500 {
+  outline-color: #6b7280;
+}
+
+.outline-gray-100 {
+  outline-color: #f3f4f6;
+}
+
+.outline-gray-300 {
+  outline-color: #d1d5db;
+}
+
 .flex-center {
   display: flex;
   align-items: center;
