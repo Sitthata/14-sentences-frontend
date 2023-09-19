@@ -16,13 +16,14 @@ const Lobby = () => {
     console.log("Component mounted")
     socket.onAny((event, ...args) => {
       console.log(event, args)
-    })
+    });
     socket.emit("getRoomInfo", roomId)
     socket.on("roomInfo", (users: roomUsersType[]) => {
-      setRoomUsers(users)
-    })
-  }, [roomId])
       console.log("roomInfo received")
+      setRoomUsers(users)
+    });
+  }, [roomId])
+      
   return (
     <div className="flex flex-col h-screen gap-5 flex-center">
       <h1 className="text-3xl">Lobby id: <span className="font-semibold">{roomId}</span></h1>
@@ -31,8 +32,8 @@ const Lobby = () => {
           {user.username}
         </div>
       ))}
-      <button className="px-14 py-2 font-semibold text-sm bg-blue-600 text-white rounded-full shadow-sm hover:bg-blue-700">
-        <span className="font-bold mx-8">Start</span>
+      <button className="py-2 text-sm font-semibold text-white bg-blue-600 rounded-full shadow-sm px-14 hover:bg-blue-700">
+        <span className="mx-8 font-bold">Start</span>
       </button>
     </div>
   )
