@@ -14,9 +14,12 @@ const JoinRoom = () => {
   const [roomId, setRoomId] = useState("");
   const [opened, { open, close }] = useDisclosure(false);
   const [error, setError] = useState<ErrorType>({});
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (username) setError(prev => ({...prev, username: ""}));
+    if (roomId) setError(prev => ({...prev, roomId: ""}));
     //Find room
     socket.on("lobbyJoined", (roomId: string, username) => {
       console.log("Joined lobby: ", roomId);
@@ -27,6 +30,7 @@ const JoinRoom = () => {
 
   const handleJoinRoom = (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     if (validateForm()) {
       socket.emit("joinLobby", roomId, username);
     } 
@@ -39,10 +43,15 @@ const JoinRoom = () => {
 
   const validateForm = () => {
     const errors: ErrorType = {}
-    if (!username.trim()) errors.username = "Please enter a username";
-    if (!roomId.trim()) errors.roomId = "Please enter a room ID";
+    if (!username.trim()) 
+      errors.username = "Please enter a username";
     
-    setError(errors)
+    if (!roomId.trim()) 
+      errors.roomId = "Please enter a room ID";
+    
+    
+    setError(errors);
+    setIsLoading(false);
     return Object.keys(errors).length === 0;
   }
 
@@ -74,7 +83,7 @@ const JoinRoom = () => {
             label="Enter Username"
             error={error.username}
           />
-          <Button variant="filled" type="submit" onClick={handleJoinRoom}>
+          <Button variant="filled" type="submit" loading={isLoading} loaderProps={{type: "bars"}} onClick={handleJoinRoom}>
             Join Room
           </Button>
         </Flex>
