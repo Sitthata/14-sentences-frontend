@@ -8,7 +8,7 @@ interface LobbyInfoProps {
 
 const LobbyInfo = ({ roomId = "loading..." }: LobbyInfoProps) => {
   return (
-    <div className="p-5 outline outline-1 min-h-[250px] flex-center gap-5 flex-col">
+    <div className="p-5 outline outline-1 min-h-[250px] sm:min-w-[20rem] min-w-full flex-center gap-5 flex-col">
       <div className="gap-2 flex-center">
         <h1 className="text-3xl">
           Lobby id: <span className="font-semibold">{roomId}</span>
