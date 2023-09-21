@@ -19,7 +19,7 @@ const LobbyInfo = ({ roomId = "loading..." }: LobbyInfoProps) => {
               <ActionIcon
                 color={copied ? "teal" : "white"}
                 style={{
-                    backgroundColor: copied ? "teal" : "gray"
+                  backgroundColor: copied ? "teal" : "gray",
                 }}
                 variant="subtle"
                 onClick={copy}
@@ -30,9 +30,11 @@ const LobbyInfo = ({ roomId = "loading..." }: LobbyInfoProps) => {
           )}
         </CopyButton>
       </div>
-      <Button variant="filled" radius="xl">
-        Start Game
-      </Button>
+      <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+        <Button variant="filled" radius="xl">
+          Start Game
+        </Button>
+      </a>
     </div>
   );
 };
