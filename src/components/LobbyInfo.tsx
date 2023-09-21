@@ -1,6 +1,5 @@
 import { Button } from "@mantine/core";
 import LobbyCopy from "./LobbyCopy";
-import { Link } from "react-router-dom";
 
 interface LobbyInfoProps {
   roomId?: string;
@@ -16,7 +15,7 @@ const LobbyInfo = ({ roomId = "loading..." }: LobbyInfoProps) => {
         <LobbyCopy roomId={roomId} />
       </div>
       <h2 className="text-xl">Share this lobby id with your friends</h2>
-      <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+      <a href="https://www.youtube.com/watch?v=9vCb_ZopT4A">
         <Button variant="filled" radius="xl">
           Start Game
         </Button>
