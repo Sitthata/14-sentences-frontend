@@ -8,7 +8,11 @@ interface PlayersListProps {
 
 const PlayerList = ({ roomUsers }: PlayersListProps) => {
   return (
-    <ScrollArea h={250} scrollbarSize={6} className="p-3 outline outline-1 sm:min-w-[15rem] min-w-full">
+    <ScrollArea
+      h={250}
+      scrollbarSize={6}
+      className="p-3 outline outline-1 sm:min-w-[15rem] min-w-full"
+    >
       <h2 className="mb-2">Player {roomUsers.length}/12</h2>
       <div className="flex-col gap-2 flex-start">
         {roomUsers.map((user) => (
