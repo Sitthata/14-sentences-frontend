@@ -1,6 +1,6 @@
-import { ActionIcon, Button, CopyButton, Tooltip } from "@mantine/core";
-import { BiCopy } from "react-icons/bi";
-import { MdDownloadDone } from "react-icons/md";
+import { Button } from "@mantine/core";
+import LobbyCopy from "./LobbyCopy";
+import { Link } from "react-router-dom";
 
 interface LobbyInfoProps {
   roomId?: string;
@@ -13,26 +13,13 @@ const LobbyInfo = ({ roomId = "loading..." }: LobbyInfoProps) => {
         <h1 className="text-3xl">
           Lobby id: <span className="font-semibold">{roomId}</span>
         </h1>
-        <CopyButton value={roomId} timeout={2000}>
-          {({ copied, copy }) => (
-            <Tooltip label={copied ? "Copied" : "Copy to clipboard"}>
-              <ActionIcon
-                color={copied ? "teal" : "white"}
-                style={{
-                    backgroundColor: copied ? "teal" : "gray"
-                }}
-                variant="subtle"
-                onClick={copy}
-              >
-                {!copied ? <BiCopy /> : <MdDownloadDone />}
-              </ActionIcon>
-            </Tooltip>
-          )}
-        </CopyButton>
+        <LobbyCopy roomId={roomId} />
       </div>
-      <Button variant="filled" radius="xl">
-        Start Game
-      </Button>
+      <a href="https://www.youtube.com/watch?v=9vCb_ZopT4A">
+        <Button variant="filled" radius="xl">
+          Start Game
+        </Button>
+      </a>
     </div>
   );
 };
