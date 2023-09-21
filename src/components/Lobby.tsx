@@ -23,7 +23,7 @@ const Lobby = () => {
   }, [roomId])
       
   return (
-    <div className="flex h-screen gap-5 flex-center">
+    <div className="flex h-screen gap-5 flex-center flex-col sm:flex-row px-5">
       <LobbyInfo roomId={roomId}/>
       <PlayersList roomUsers={roomUsers} />
     </div>

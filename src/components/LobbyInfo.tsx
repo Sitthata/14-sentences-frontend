@@ -8,14 +8,15 @@ interface LobbyInfoProps {
 
 const LobbyInfo = ({ roomId = "loading..." }: LobbyInfoProps) => {
   return (
-    <div className="p-5 outline outline-1 min-h-[250px] flex-center gap-5 flex-col">
-      <div className="gap-2 flex-center">
+    <div className="p-5 outline outline-1 min-h-[250px] sm:min-w-[20rem] min-w-full flex-center gap-5 flex-col">
+      <div className="flex items-center justify-between w-full gap-2">
         <h1 className="text-3xl">
           Lobby id: <span className="font-semibold">{roomId}</span>
         </h1>
         <LobbyCopy roomId={roomId} />
       </div>
-      <a href="https://www.youtube.com/watch?v=9vCb_ZopT4A">
+      <h2 className="text-xl">Share this lobby id with your friends</h2>
+      <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
         <Button variant="filled" radius="xl">
           Start Game
         </Button>
