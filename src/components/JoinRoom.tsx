@@ -3,6 +3,8 @@ import { useDisclosure } from "@mantine/hooks";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import socket from "../socket/socket"
+import { notifications } from "@mantine/notifications";
+import { GiCancel } from "react-icons/gi";
 
 type ErrorType = {
   username?: string;
@@ -20,12 +22,29 @@ const JoinRoom = () => {
   useEffect(() => {
     if (username) setError(prev => ({...prev, username: ""}));
     if (roomId) setError(prev => ({...prev, roomId: ""}));
+
+    const handleLobbyNotFound = () => {
+        setError(prev => ({...prev, roomId: "Room not found"}));
+        setIsLoading(false);
+        notifications.show({
+            title: 'Room not found',
+            message: 'The room you are trying to join does not exist. Please try again.',
+            autoClose: 4000,
+            color: "red",
+            icon: <GiCancel/>
+        });
+    };
     //Find room
     socket.on("lobbyJoined", (roomId: string, username) => {
       console.log("Joined lobby: ", roomId);
       console.log("Initial Users: ", username);
       navigate(`/lobby/${roomId}`);
     });
+    socket.on("lobbyNotFound", handleLobbyNotFound);
+    return () => {
+      socket.off("lobbyJoined");
+      socket.off("lobbyNotFound");
+    }
   }, [navigate, username, roomId]);
 
   const handleJoinRoom = (e: React.FormEvent) => {
@@ -48,8 +67,7 @@ const JoinRoom = () => {
     
     if (!roomId.trim()) 
       errors.roomId = "Please enter a room ID";
-    
-    
+
     setError(errors);
     setIsLoading(false);
     return Object.keys(errors).length === 0;

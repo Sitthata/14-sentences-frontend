@@ -13,13 +13,14 @@
   "dependencies": {
     "@mantine/core": "^7.0.0",
     "@mantine/hooks": "^7.0.0",
+    "@mantine/notifications": "^7.0.0",
+    "@react-buddy/ide-toolbox": "^2.4.0",
     "axios": "^1.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
     "react-router-dom": "^6.16.0",
-    "socket.io-client": "^4.7.2",
-    "@react-buddy/ide-toolbox": "^2.4.0"
+    "socket.io-client": "^4.7.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

@@ -1,14 +1,16 @@
-import React, {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
-import {Button, Input} from "@mantine/core";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button, TextInput } from "@mantine/core";
 import JoinRoom from "./JoinRoom";
 import socket from "../socket/socket";
+import { notifications } from "@mantine/notifications";
+import { GiCancel } from "react-icons/gi";
 
 enum CreateRoomState {
   IDLE,
   LOADING,
   ERROR,
-  SUCCESS,
+  MAX_USERS_REACHED
 }
 
 const CreateRoom = () => {
@@ -26,12 +28,25 @@ const CreateRoom = () => {
           navigate(`/lobby/${roomId}`);
         };
 
+        const handleMaxUserLimitReached = () => {
+          setComponentState(CreateRoomState.MAX_USERS_REACHED);
+          notifications.show({
+            title: 'Max User Limit Reached',
+            message: 'The maximum number of users has been reached. Please try again later.',
+            autoClose: 4000,
+            icon: <GiCancel/>,
+            color: "red"
+          });
+        };
+
         // Attach the event handler
         socket.on("lobbyCreated", handleLobbyCreated);
+        socket.on("maxUserLimitReached", handleMaxUserLimitReached);
 
         // Cleanup function to remove the event handler
         return () => {
           socket.off("lobbyCreated", handleLobbyCreated);
+          socket.off("maxUserLimitReached", handleMaxUserLimitReached);
         };
       }, [navigate, username]);
 
@@ -47,18 +62,15 @@ const CreateRoom = () => {
 
       return (
           <form className="flex flex-col gap-5 p-5 outline outline-1 outline-gray-300">
-            <Input.Wrapper
-                label="Enter Username"
+            <TextInput
+                label="Enter your username"
+                placeholder="Username"
+                size="md"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 error={componentState === CreateRoomState.ERROR ? "Please enter a username" : false}
-            >
-              <Input
-                  placeholder="Username"
-                  size="md"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  error={componentState === CreateRoomState.ERROR ? "Please enter a username" : false}
-              />
-            </Input.Wrapper>
+            />
+
             <div className="flex gap-5">
               <Button
                   variant="filled"
