@@ -7,23 +7,23 @@ import PlayersList from './PlayerList';
 import LobbyInfo from './LobbyInfo';
 
 const Lobby = () => {
-  const { roomId } = useParams<{ roomId: string }>()
-  const [roomUsers, setRoomUsers] = useState<roomUsersType[]>([])
+  const { roomId } = useParams<{ roomId: string }>();
+  const [roomUsers, setRoomUsers] = useState<roomUsersType[]>([]);
 
   useEffect(() => {
     console.log("Component mounted")
-    socket.onAny((event, ...args) => {
-      console.log(event, args)
-    });
     socket.emit("getRoomInfo", roomId)
     socket.on("roomInfo", (users: roomUsersType[]) => {
       console.log("roomInfo received")
       setRoomUsers(users)
     });
+    return () => {
+      socket.off("roomInfo");
+    }
   }, [roomId])
       
   return (
-    <div className="flex h-screen gap-5 flex-center flex-col sm:flex-row px-5">
+    <div className="flex flex-col h-screen gap-5 px-5 flex-center sm:flex-row">
       <LobbyInfo roomId={roomId}/>
       <PlayersList roomUsers={roomUsers} />
     </div>
