@@ -21,7 +21,7 @@ const JoinRoom = () => {
 
   const initializeSocketListeners = useCallback(() => {
     const handleLobbyNotFound = () => {
-      setError(prev => ({...prev, roomId: "Room not found"}));
+      setError(prev => ({...prev, roomId: "The room you are trying to join does not exist."}));
       setIsLoading(false);
       notifications.show({
         title: 'Room not found',
