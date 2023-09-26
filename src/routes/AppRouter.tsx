@@ -1,5 +1,5 @@
-import CreateRoomPage from './create-room/create-room';
-import LobbyPage from './lobby/lobby';
+import CreateRoomPage from './create-room'
+import LobbyPage from './lobby';
 
 const routes = [
   {
